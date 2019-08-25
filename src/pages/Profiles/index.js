@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useCallback, useContext } from 'react';
 import { withRouter } from 'react-router-dom';
-import { UserContext } from '../../context';
+import { ProfileContext } from '../../context';
 import { database } from '../../firebase';
 import { SectionWrapper, Profile } from '../../components';
 
 const Profiles = ({ history }) => {
   const [profiles, setProfiles] = useState([]);
-  const [user, setUser] = useContext(UserContext);
+  const [profile, setProfile] = useContext(ProfileContext);
   const [selectedProfile, setSelectedProfile] = useState({});
   const subscribeToProfiles = _ => {
     database.ref('/profiles').on('value', snapshot => {
@@ -16,7 +16,7 @@ const Profiles = ({ history }) => {
   };
   const handleProfileClick = profile => _ => setSelectedProfile(profile);
   const handleViewProfile = _ => {
-    setUser({ ...user, selectedProfile });
+    setProfile({ ...profile, selectedProfile });
     history.push(`/selected-profile/${selectedProfile.uid}`);
   };
   const mountEffect = useCallback(subscribeToProfiles, []);

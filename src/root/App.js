@@ -1,16 +1,16 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { UserContextProvider, ModalContextProvider } from '../context';
+import { ProfileContextProvider, ModalContextProvider } from '../context';
 import Content from '../content';
 
 const App = _ => (
-  <UserContextProvider>
+  <ProfileContextProvider>
     <ModalContextProvider>
       <Router>
         <Content />
       </Router>
     </ModalContextProvider>
-  </UserContextProvider>
+  </ProfileContextProvider>
 );
 
 export default App;

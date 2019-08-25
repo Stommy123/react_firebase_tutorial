@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useCallback, useContext } from 'react';
 import { withRouter } from 'react-router-dom';
 import { database } from '../../firebase';
-import { UserContext } from '../../context';
+import { ProfileContext } from '../../context';
 import { SectionWrapper, ProfileContent, Comments } from '../../components';
 
 const SelectedProfile = ({ match = {}, history }) => {
   const [comments, setComments] = useState([]);
-  const [{ profile = {}, selectedProfile = {} }] = useContext(UserContext);
+  const [{ displayName, selectedProfile = {} }] = useContext(ProfileContext);
   const { profileId } = match.params || {};
   const ref = `/comments/${profileId}`;
   const subscribeToComments = _ => {
@@ -19,7 +19,7 @@ const SelectedProfile = ({ match = {}, history }) => {
   const handleNewComment = comment => {
     const commentRef = database.ref(ref).push() || {};
     const timestamp = new Date().toDateString();
-    const newComment = { comment, author: profile.displayName, createdAt: timestamp, id: commentRef.key };
+    const newComment = { comment, author: displayName, createdAt: timestamp, id: commentRef.key };
     commentRef.set(newComment);
   };
   const mountEffect = useCallback(subscribeToComments, []);
