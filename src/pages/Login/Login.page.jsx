@@ -6,7 +6,7 @@ import { schema } from './Login.schema';
 import { ModalContext, ProfileContext } from '../../context';
 
 const Login = ({ history }) => {
-  const { setProfile, authenticateUser } = useContext(ProfileContext);
+  const { authenticateUser } = useContext(ProfileContext);
   const [loading, setLoading] = useState(false);
   const { setModal } = useContext(ModalContext);
   const handleLogin = async ({ email, password }) => {
@@ -19,7 +19,6 @@ const Login = ({ history }) => {
     } catch (e) {
       console.log('error logging in', e);
       setModal({ isOpen: true, content: 'Could not login with these credentials, please try again' });
-      setProfile({});
     } finally {
       setLoading(false);
     }
