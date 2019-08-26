@@ -6,14 +6,14 @@ import { NavBar, AuthRoute } from '../components';
 
 const Content = _ => (
   <div className="container">
-    <NavBar />
-    <Route exact path="/" component={Home} />
-    <Route exact path="/error" component={ErrorPage} />
     <ProfileContextProvider>
+      <NavBar />
       <ModalContextProvider>
         <Route exact path="/register" component={Register} />
         <Route exact path="/login" component={Login} />
       </ModalContextProvider>
+      <Route exact path="/" component={Home} />
+      <Route exact path="/error" component={ErrorPage} />
       <AuthRoute exact path="/my-profile" component={MyProfile} />
       <AuthRoute exact path="/profiles" component={Profiles} />
       <AuthRoute exact path="/selected-profile/:profileId" component={SelectedProfile} />

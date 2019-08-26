@@ -1,5 +1,4 @@
-import React, { useReducer, useEffect, useCallback } from 'react';
-import { FormGroup } from '..';
+import React, { useReducer, useMemo } from 'react';
 
 const Form = ({ schema: { id, fields = [], formHeading, submitText } = {}, handleSubmit }) => {
   const getInitialState = _ =>
@@ -7,36 +6,35 @@ const Form = ({ schema: { id, fields = [], formHeading, submitText } = {}, handl
       acc[field.id] = String();
       return acc;
     }, {});
+  const initialState = useMemo(getInitialState, []);
   const formReducer = (state, payload) => ({ ...state, ...payload });
-  const [state, setState] = useReducer(formReducer, {});
-  const handleInputChange = ({ id, value }) => setState({ [id]: value });
-  const handleUpload = _ => console.log('backend image storage still in progress!');
+  const [state, setState] = useReducer(formReducer, initialState);
+  const handleInputChange = id => e => {
+    console.log('initial state', state);
+    console.log('id', id);
+    console.log('wtf', e.target.value);
+    setState({ [id]: e.target.value });
+  };
   const onSubmit = e => {
     e.preventDefault();
     handleSubmit(state);
-    setState(getInitialState());
+    setState(initialState);
   };
-  const setInitialState = _ => {
-    setState(getInitialState);
-  };
-  const mountEffect = useCallback(setInitialState, []);
-  useEffect(
-    _ => {
-      mountEffect();
-    },
-    [mountEffect]
-  );
+  console.log('current state', state);
   return (
     <form onSubmit={onSubmit} id={id}>
       <h1 className="display-4 m-b-2">{formHeading}</h1>
-      {fields.map(field => (
-        <FormGroup
-          key={field.id}
-          {...field}
-          onUpload={handleUpload}
-          onChange={handleInputChange}
-          value={state[field.id]}
-        />
+      {fields.map(({ id, label, type, value }) => (
+        <div className="form-group" key={id}>
+          <label>{label}</label>
+          <input
+            id={id}
+            type={type}
+            placeholder={label}
+            onChange={handleInputChange(id)}
+            value={state[id] || String()}
+          />
+        </div>
       ))}
       <button className="btn btn-primary" type="submit">
         {submitText}

@@ -4,7 +4,6 @@ export { default as Modal } from './modal/Modal.component';
 export { default as NavBar } from './nav_bar/NavBar.component';
 export { default as SectionWrapper } from './section_wrapper/SectionWrapper.component';
 export { default as Form } from './form/Form.component';
-export { default as FormGroup } from './form_group/FormGroup.component';
 export { default as Profile } from './profile/Profile.component';
 export { default as ProfileContent } from './profile_content/ProfileContent.component';
 export { default as Comments } from './comments/Comments.component';
