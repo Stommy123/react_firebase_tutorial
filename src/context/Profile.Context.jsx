@@ -7,14 +7,18 @@ export const ProfileContext = createContext({});
 export const ProfileContextProvider = ({ children }) => {
   const [profile, setProfile] = useState({});
   const authenticateUser = async _ => {
-    const { user = {}, token } = (await getCurrentUser()) || {};
-    if (!user.uid) return;
+    const { user: { uid } = {}, token } = (await getCurrentUser()) || {};
+    if (!uid) return;
     sessionStorage.setItem('Auth', `Bearer ${token}`);
-    database.ref('/profiles').once('value', snapshot => {
-      const profiles = snapshot.val() || {};
-      const currentUserProfile = Object.values(profiles).find(({ uid }) => uid === user.uid) || {};
-      setProfile({ ...profile, ...currentUserProfile });
-    });
+    database
+      .ref('/profiles')
+      .orderByChild('uid')
+      .equalTo(uid)
+      .once('value', snapshot => {
+        const profile = snapshot.val() || {};
+        const currentUserProfile = Object.values(profile)[0] || {};
+        setProfile({ ...profile, ...currentUserProfile });
+      });
   };
   const mountEffect = useCallback(authenticateUser, []);
   useEffect(
