@@ -2,7 +2,7 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 import { ProfileContextProvider, ModalContextProvider } from '../context';
 import { Home, Login, MyProfile, Register, Error as ErrorPage, Profiles, SelectedProfile } from '../pages';
-import { NavBar, AuthRoute } from '../components';
+import { NavBar, AuthRoute, Modal } from '../components';
 
 const Content = _ => (
   <div className="container">
@@ -11,6 +11,7 @@ const Content = _ => (
       <ModalContextProvider>
         <Route exact path="/register" component={Register} />
         <Route exact path="/login" component={Login} />
+        <Modal />
       </ModalContextProvider>
       <Route exact path="/" component={Home} />
       <Route exact path="/error" component={ErrorPage} />

@@ -1,14 +1,16 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import { database, auth } from '../../firebase';
-import { Form, Modal, SectionWrapper } from '../../components';
+import { Form, SectionWrapper, Loader } from '../../components';
 import { schema } from './Register.schema';
 import { ModalContext } from '../../context';
 import { getProfilePicture } from '../../helpers';
 
 const Register = ({ history }) => {
   const { setModal } = useContext(ModalContext);
+  const [loading, setLoading] = useState(false);
   const handleRegister = async formData => {
+    setLoading(true);
     const { email, password, tagline, displayName, occupation, passwordConfirmation } = formData;
     if (password !== passwordConfirmation) return setModal({ id: 'registerModal', content: 'Passwords did not match' });
     try {
@@ -21,13 +23,14 @@ const Register = ({ history }) => {
       history.push('/login');
     } catch (e) {
       console.log('There was an error creating your user', e);
-      setModal({ id: 'registerModal', content: 'There was an error creating your profile, please try again' });
+      setModal({ isOpen: true, content: 'There was an error creating your profile, please try again' });
+    } finally {
+      setLoading(false);
     }
   };
   return (
     <SectionWrapper columnDefs="col-md-6 col-md-offset-3">
-      <Form schema={schema} handleSubmit={handleRegister} />
-      <Modal id="registerModal" />
+      {loading ? <Loader loading={loading} /> : <Form schema={schema} handleSubmit={handleRegister} />}
     </SectionWrapper>
   );
 };

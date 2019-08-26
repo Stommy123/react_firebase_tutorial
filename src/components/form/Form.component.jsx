@@ -10,9 +10,6 @@ const Form = ({ schema: { id, fields = [], formHeading, submitText } = {}, handl
   const formReducer = (state, payload) => ({ ...state, ...payload });
   const [state, setState] = useReducer(formReducer, initialState);
   const handleInputChange = id => e => {
-    console.log('initial state', state);
-    console.log('id', id);
-    console.log('wtf', e.target.value);
     setState({ [id]: e.target.value });
   };
   const onSubmit = e => {
@@ -20,13 +17,11 @@ const Form = ({ schema: { id, fields = [], formHeading, submitText } = {}, handl
     handleSubmit(state);
     setState(initialState);
   };
-  console.log('current state', state);
   return (
-    <form onSubmit={onSubmit} id={id}>
+    <form onSubmit={onSubmit} id={id} className="form-wrapper">
       <h1 className="display-4 m-b-2">{formHeading}</h1>
-      {fields.map(({ id, label, type, value }) => (
+      {fields.map(({ id, label, type }) => (
         <div className="form-group" key={id}>
-          <label>{label}</label>
           <input
             id={id}
             type={type}

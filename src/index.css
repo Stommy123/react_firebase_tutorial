@@ -262,6 +262,21 @@ header {
   margin-bottom: 10px;
 }
 
+.loader-container {
+  display: flex;
+  justify-content: center;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.form-group label {
+  margin: 0 auto;
+}
+
 .c-modal-cover {
   position: fixed;
   top: 0;

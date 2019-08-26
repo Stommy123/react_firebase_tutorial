@@ -9,6 +9,7 @@
     "firebase-admin": "^8.4.0",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
+    "react-loader-spinner": "^3.1.2",
     "react-portal": "^4.2.0",
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.1.1"
