@@ -19,7 +19,9 @@ const NavBar = _ => (
       <li>
         <NavLink to="/my-profile">My Profile</NavLink>
       </li>
-      <AccessButton />
+      <li>
+        <AccessButton />
+      </li>
     </ul>
   </header>
 );

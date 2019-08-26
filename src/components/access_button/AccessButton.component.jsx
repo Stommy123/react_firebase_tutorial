@@ -17,10 +17,14 @@ const AccessButton = _ => {
     </Link>
   ) : (
     <>
-      <NavLink className="btn btn-info pull-md-right" to="/login">
-        Login
-      </NavLink>
-      <NavLink to="/register">Sign Up</NavLink>
+      <li>
+        <NavLink className="btn btn-info pull-md-right" to="/login">
+          Login
+        </NavLink>
+      </li>
+      <li>
+        <NavLink to="/register">Sign Up</NavLink>
+      </li>
     </>
   );
 };
