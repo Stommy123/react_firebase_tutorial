@@ -1,7 +1,7 @@
 import React from 'react';
 import { SectionWrapper } from '../../components';
 
-const Home = _ => (
+export default _ => (
   <SectionWrapper className="home">
     <h2>Firebase Tutorial</h2>
     <p>A Firebase Tutorial app that explores Firebase Auth and Firebase Realtime Database features</p>
@@ -13,5 +13,3 @@ const Home = _ => (
     <hr />
   </SectionWrapper>
 );
-
-export default Home;

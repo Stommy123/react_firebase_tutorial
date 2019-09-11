@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { ProfileContext } from '../../context';
 import { SectionWrapper, ProfileContent } from '../../components';
 
-const MyProfile = _ => {
+export default _ => {
   const { profile } = useContext(ProfileContext);
   return (
     <SectionWrapper>
@@ -10,5 +10,3 @@ const MyProfile = _ => {
     </SectionWrapper>
   );
 };
-
-export default MyProfile;

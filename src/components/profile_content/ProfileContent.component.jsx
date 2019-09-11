@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ProfileContent = ({ displayName, photoURL, tagline, occupation }) => (
+export default ({ displayName, photoURL, tagline, occupation }) => (
   <>
     <img className="my-profile-img" src={photoURL} alt="avatar" />
     <h2>{displayName}</h2>
@@ -12,5 +12,3 @@ const ProfileContent = ({ displayName, photoURL, tagline, occupation }) => (
     </p>
   </>
 );
-
-export default ProfileContent;

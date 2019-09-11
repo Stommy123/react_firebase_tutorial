@@ -1,6 +1,6 @@
 import React, { useReducer, useMemo } from 'react';
 
-const Form = ({ schema: { id, fields = [], formHeading, submitText } = {}, handleSubmit }) => {
+export default ({ schema: { id, fields = [], formHeading, submitText } = {}, handleSubmit }) => {
   const getInitialState = _ =>
     fields.reduce((acc, field) => {
       acc[field.id] = String();
@@ -37,5 +37,3 @@ const Form = ({ schema: { id, fields = [], formHeading, submitText } = {}, handl
     </form>
   );
 };
-
-export default Form;

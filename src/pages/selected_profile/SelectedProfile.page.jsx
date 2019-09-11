@@ -19,7 +19,7 @@ const SelectedProfile = ({ match = {}, history }) => {
     });
   };
   const handleNewComment = comment => {
-    const commentRef = database.ref(ref).push() || {};
+    const commentRef = database.ref(ref).push();
     const timestamp = new Date().toDateString();
     const newComment = { comment, author: displayName, createdAt: timestamp, id: commentRef.key };
     commentRef.set(newComment);

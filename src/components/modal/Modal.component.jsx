@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Portal } from 'react-portal';
 import { ModalContext } from '../../context';
 
-const Modal = _ => {
+export default  _ => {
   const { modal, setModal } = useContext(ModalContext);
   return modal.isOpen ? (
     <Portal>
@@ -22,5 +22,3 @@ const Modal = _ => {
     </Portal>
   ) : null;
 };
-
-export default Modal;

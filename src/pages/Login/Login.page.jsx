@@ -1,11 +1,10 @@
 import React, { useContext, useState } from 'react';
-import { withRouter } from 'react-router-dom';
 import { auth } from '../../firebase';
 import { SectionWrapper, Form, Loader } from '../../components';
 import { schema } from './Login.schema';
 import { ModalContext, ProfileContext } from '../../context';
 
-const Login = ({ history }) => {
+export default ({ history }) => {
   const { authenticateUser } = useContext(ProfileContext);
   const [loading, setLoading] = useState(false);
   const { setModal } = useContext(ModalContext);
@@ -29,5 +28,3 @@ const Login = ({ history }) => {
     </SectionWrapper>
   );
 };
-
-export default withRouter(Login);

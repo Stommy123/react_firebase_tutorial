@@ -1,23 +1,21 @@
 import React, { useContext, useState } from 'react';
-import { withRouter } from 'react-router-dom';
 import { database, auth } from '../../firebase';
 import { Form, SectionWrapper, Loader } from '../../components';
 import { schema } from './Register.schema';
 import { ModalContext } from '../../context';
 import { getProfilePicture } from '../../helpers';
 
-const Register = ({ history }) => {
+export default ({ history }) => {
   const { setModal } = useContext(ModalContext);
   const [loading, setLoading] = useState(false);
   const handleRegister = async formData => {
     setLoading(true);
     const { email, password, tagline, displayName, occupation, passwordConfirmation } = formData;
-    if (password !== passwordConfirmation) return setModal({ id: 'registerModal', content: 'Passwords did not match' });
+    if (password !== passwordConfirmation) return setModal({ isOpen: true, content: 'Passwords did not match' });
     try {
       const { user: newUser = {} } = await auth.createUserWithEmailAndPassword(email, password);
-      const photoURL = getProfilePicture();
-      newUser.updateProfile({ displayName, photoURL });
       if (!newUser) return;
+      const photoURL = getProfilePicture();
       const newProfileRef = database.ref('/profiles').push();
       newProfileRef.set({ email, displayName, tagline, id: newProfileRef.key, uid: newUser.uid, occupation, photoURL });
       history.push('/login');
@@ -35,4 +33,4 @@ const Register = ({ history }) => {
   );
 };
 
-export default withRouter(Register);
+

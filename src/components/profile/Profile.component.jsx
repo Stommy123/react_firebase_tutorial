@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 
-const Profile = ({
+export default ({
   profile,
   profile: { uid, displayName, tagline, photoURL, occupation } = {},
   selectedProfile,
@@ -20,5 +20,3 @@ const Profile = ({
     </div>
   );
 };
-
-export default Profile;

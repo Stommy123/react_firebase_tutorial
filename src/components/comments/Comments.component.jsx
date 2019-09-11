@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const Comments = ({ comments = [], handleSubmit }) => {
+export default ({ comments = [], handleSubmit }) => {
   const [comment, setComment] = useState(String());
   const handleSubmitComment = e => {
     e.preventDefault();
@@ -24,4 +24,3 @@ const Comments = ({ comments = [], handleSubmit }) => {
   );
 };
 
-export default Comments;
