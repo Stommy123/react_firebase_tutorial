@@ -2,10 +2,10 @@ import React, { useContext, useState } from 'react';
 import { auth } from '../../firebase';
 import { SectionWrapper, Form, Loader } from '../../components';
 import { schema } from './Login.schema';
-import { ModalContext, ProfileContext } from '../../context';
+import { ModalContext, GlobalContext } from '../../context';
 
 export default ({ history }) => {
-  const { authenticateUser } = useContext(ProfileContext);
+  const { authenticateUser } = useContext(GlobalContext);
   const [loading, setLoading] = useState(false);
   const { setModal } = useContext(ModalContext);
   const handleLogin = async ({ email, password }) => {
