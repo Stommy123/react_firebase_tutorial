@@ -5,7 +5,7 @@ import { schema } from './Login.schema';
 import { ModalContext, GlobalContext } from '../../context';
 
 export default ({ history }) => {
-  const { authenticateUser } = useContext(GlobalContext);
+  const { createSession } = useContext(GlobalContext);
   const [loading, setLoading] = useState(false);
   const { setModal } = useContext(ModalContext);
   const handleLogin = async ({ email, password }) => {
@@ -13,7 +13,7 @@ export default ({ history }) => {
     try {
       const { user } = await auth.signInWithEmailAndPassword(email, password);
       if (!user) return;
-      await authenticateUser();
+      await createSession();
       history.push('/my-profile');
     } catch (e) {
       console.log('error logging in', e);

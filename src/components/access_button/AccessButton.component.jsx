@@ -4,9 +4,9 @@ import { GlobalContext } from '../../context';
 import { isLoggedIn } from '../../helpers';
 
 const AccessButton = _ => {
-  const { unauthenticateUser } = useContext(GlobalContext);
+  const { clearSession } = useContext(GlobalContext);
   return isLoggedIn() ? (
-    <Link to="/" onClick={unauthenticateUser}>
+    <Link to="/" onClick={clearSession}>
       Logout
     </Link>
   ) : (

@@ -3,10 +3,10 @@ import { GlobalContext } from '../../context';
 import { SectionWrapper, ProfileContent } from '../../components';
 
 export default _ => {
-  const { globalState } = useContext(GlobalContext);
+  const { globalState = {} } = useContext(GlobalContext);
   return (
     <SectionWrapper>
-      <ProfileContent {...(globalState.currentUserProfile || {})} />
+      <ProfileContent {...globalState.currentUserProfile} />
     </SectionWrapper>
   );
 };

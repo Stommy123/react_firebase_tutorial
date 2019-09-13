@@ -13,26 +13,26 @@ const INITIAL_STATE = {
 export const GlobalContextProvider = ({ children }) => {
   const globalContextReducer = (state, payload) => ({ ...state, ...payload });
   const [globalState, setGlobalState] = useReducer(globalContextReducer, INITIAL_STATE);
-  const authenticateUser = async _ => {
-    const { user: currentUser = {}, token } = (await getCurrentUser()) || {};
+  const createSession = async _ => {
+    const { currentUser = {}, token } = (await getCurrentUser()) || {};
     if (!currentUser.uid) return;
-    sessionStorage.setItem('Auth', `Bearer ${token}`);
+    sessionStorage.setItem('Auth', token);
     database
       .ref('/profiles')
       .orderByChild('uid')
       .equalTo(currentUser.uid)
       .once('value', snapshot => {
-        const profile = snapshot.val() || {};
+        const profile = snapshot.val();
         const currentUserProfile = Object.values(profile)[0] || {};
         setGlobalState({ currentUser, currentUserProfile });
       });
   };
-  const unauthenticateUser = async _ => {
+  const clearSession = async _ => {
     await auth.signOut();
     sessionStorage.removeItem('Auth');
     setGlobalState({ currentUser: {}, currentUserProfile: {}, selectedProfile: {} });
   }
-  const mountEffect = useCallback(authenticateUser, []);
+  const mountEffect = useCallback(createSession, []);
   useEffect(
     _ => {
       mountEffect();
@@ -40,6 +40,6 @@ export const GlobalContextProvider = ({ children }) => {
     [mountEffect]
   );
   return (
-    <GlobalContext.Provider value={{ globalState, setGlobalState, authenticateUser, unauthenticateUser }}>{children}</GlobalContext.Provider>
+    <GlobalContext.Provider value={{ globalState, setGlobalState, createSession, clearSession }}>{children}</GlobalContext.Provider>
   );
 };

@@ -1,24 +1,19 @@
-import React, { useState, useEffect, useCallback, useContext } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { withRouter } from 'react-router-dom';
-import { GlobalContext } from '../../context';
 import { database } from '../../firebase';
 import { SectionWrapper, Profile } from '../../components';
 
 const Profiles = ({ history }) => {
   const [profiles, setProfiles] = useState([]);
-  const { setGlobalState } = useContext(GlobalContext);
-  const [selectedProfile, setSelectedProfile] = useState({});
+  const [selectedProfileId, setSelectedProfileId] = useState({});
   const subscribeToProfiles = _ => {
     database.ref('/profiles').on('value', snapshot => {
-      const profiles = snapshot.val() || {};
+      const profiles = snapshot.val();
       setProfiles(Object.values(profiles));
     });
   };
-  const handleProfileClick = selectedProfile => _ => setSelectedProfile(selectedProfile);
-  const handleViewProfile = _ => {
-    setGlobalState({ selectedProfile });
-    history.push(`/selected-profile/${selectedProfile.uid}`);
-  };
+  const handleProfileClick = id => _ => setSelectedProfileId(id);
+  const handleViewProfile = _ => history.push(`/selected-profile/${selectedProfileId}`);
   const mountEffect = useCallback(subscribeToProfiles, []);
   useEffect(
     _ => {
@@ -33,9 +28,9 @@ const Profiles = ({ history }) => {
         {profiles.map(profile => (
           <Profile
             key={profile.id}
-            profile={profile}
+            {...profile}
             handleProfileClick={handleProfileClick}
-            selectedProfile={selectedProfile}
+            selectedProfileId={selectedProfileId}
             handleViewProfile={handleViewProfile}
           />
         ))}
