@@ -3,7 +3,7 @@ import React, { useReducer, useMemo } from 'react';
 export default ({ schema: { id, fields = [], formHeading, submitText } = {}, handleSubmit }) => {
   const getInitialState = _ =>
     fields.reduce((acc, field) => {
-      acc[field.id] = String();
+      acc[field.id] = field.default || String();
       return acc;
     }, {});
   const initialState = useMemo(getInitialState, []);
