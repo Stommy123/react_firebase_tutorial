@@ -29,7 +29,7 @@ export const GlobalContextProvider = ({ children }) => {
   const clearSession = async _ => {
     await auth.signOut();
     sessionStorage.removeItem('Auth');
-    setGlobalState({ currentUser: {}, currentUserProfile: {}, selectedProfile: {} });
+    setGlobalState({ currentUser: {}, currentUserProfile: {} });
   }
   const mountEffect = useCallback(createSession, []);
   useEffect(
