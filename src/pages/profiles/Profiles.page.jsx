@@ -5,7 +5,7 @@ import { SectionWrapper, Profile } from '../../components';
 
 const Profiles = ({ history }) => {
   const [profiles, setProfiles] = useState([]);
-  const [selectedProfileId, setSelectedProfileId] = useState({});
+  const [selectedProfileId, setSelectedProfileId] = useState(String());
   const subscribeToProfiles = _ => {
     database.ref('/profiles').on('value', snapshot => {
       const profiles = snapshot.val();

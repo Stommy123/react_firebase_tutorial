@@ -7,7 +7,6 @@ export const GlobalContext = createContext({});
 const INITIAL_STATE = {
   currentUser: {},
   currentUserProfile: {},
-  selectedProfile: {},
 }
 
 export const GlobalContextProvider = ({ children }) => {
