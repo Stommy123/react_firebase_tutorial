@@ -4,10 +4,7 @@ import { getCurrentUser } from '../helpers';
 
 export const GlobalContext = createContext({});
 
-const INITIAL_STATE = {
-  currentUser: {},
-  currentUserProfile: {},
-}
+const INITIAL_STATE = { currentUser: null, currentUserProfile: null };
 
 export const GlobalContextProvider = ({ children }) => {
   const globalContextReducer = (state, payload) => ({ ...state, ...payload });
@@ -29,16 +26,20 @@ export const GlobalContextProvider = ({ children }) => {
   const clearSession = async _ => {
     await auth.signOut();
     sessionStorage.removeItem('Auth');
-    setGlobalState({ currentUser: {}, currentUserProfile: {} });
-  }
+    setGlobalState({ currentUser: null, currentUserProfile: null });
+  };
   const mountEffect = useCallback(createSession, []);
   useEffect(
     _ => {
       mountEffect();
+      window.addEventListener('beforeunload', clearSession);
+      return _ => window.removeEventListener('beforeunload');
     },
     [mountEffect]
   );
   return (
-    <GlobalContext.Provider value={{ globalState, setGlobalState, createSession, clearSession }}>{children}</GlobalContext.Provider>
+    <GlobalContext.Provider value={{ globalState, setGlobalState, createSession, clearSession }}>
+      {children}
+    </GlobalContext.Provider>
   );
 };
