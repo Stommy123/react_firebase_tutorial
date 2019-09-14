@@ -8,7 +8,7 @@ const Profiles = ({ history }) => {
   const [selectedProfileId, setSelectedProfileId] = useState(String());
   const subscribeToProfiles = _ => {
     database.ref('/profiles').on('value', snapshot => {
-      const profiles = snapshot.val();
+      const profiles = snapshot.val() || {};
       setProfiles(Object.values(profiles));
     });
   };

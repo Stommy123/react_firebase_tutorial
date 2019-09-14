@@ -18,7 +18,7 @@ export const GlobalContextProvider = ({ children }) => {
       .orderByChild('uid')
       .equalTo(currentUser.uid)
       .once('value', snapshot => {
-        const profile = snapshot.val();
+        const profile = snapshot.val() || {};
         const currentUserProfile = Object.values(profile)[0] || {};
         setGlobalState({ currentUser, currentUserProfile });
       });
@@ -32,8 +32,6 @@ export const GlobalContextProvider = ({ children }) => {
   useEffect(
     _ => {
       mountEffect();
-      window.addEventListener('beforeunload', clearSession);
-      return _ => window.removeEventListener('beforeunload');
     },
     [mountEffect]
   );

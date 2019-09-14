@@ -9,9 +9,7 @@ export default ({ schema: { id, fields = [], formHeading, submitText } = {}, han
   const initialState = useMemo(getInitialState, []);
   const formReducer = (state, payload) => ({ ...state, ...payload });
   const [state, setState] = useReducer(formReducer, initialState);
-  const handleInputChange = id => e => {
-    setState({ [id]: e.target.value });
-  };
+  const handleInputChange = id => e => setState({ [id]: e.target.value });
   const onSubmit = e => {
     e.preventDefault();
     handleSubmit(state);

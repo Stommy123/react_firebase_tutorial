@@ -13,7 +13,7 @@
 }
 body {
   color: #576366;
-  background: #5fcf80;
+  background: #1a73e8;
   margin: 0;
   font-family: 'Roboto', sans-serif;
 }
@@ -135,13 +135,11 @@ header {
 /* ICONS -------- */
 
 .icn-logo {
-  background: #54606b;
   color: #fff;
 }
-.icn-logo i {
-  font-size: 2.45em;
-  line-height: 0;
-  margin-top: 30px;
+.icn-logo img {
+  max-width: 50px;
+  max-height: 50px;
 }
 .icn-error {
   font-size: 3.2em;

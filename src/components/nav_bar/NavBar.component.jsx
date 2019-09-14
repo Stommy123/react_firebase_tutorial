@@ -1,11 +1,12 @@
 import React from 'react';
 import { NavLink, withRouter } from 'react-router-dom';
 import { AccessButton } from '..';
+import FIREBASE_LOGO from '../../assets/images/firebase.png';
 
 const NavBar = _ => (
   <header>
     <span className="icn-logo">
-      <i className="material-icons">code</i>
+      <img src={FIREBASE_LOGO} alt="logo" />
     </span>
     <ul className="main-nav">
       <li>

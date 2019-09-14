@@ -13,7 +13,8 @@ const SelectedProfile = ({ match = {} }) => {
   const ref = `/comments/${profileId}`;
   const subscribeToComments = _ => {
     database.ref(ref).on('value', snapshot => {
-      const comments = snapshot.val();
+      const comments = snapshot.val() || {};
+      console.log('comments', comments);
       setComments(Object.values(comments));
     });
   };
@@ -24,13 +25,13 @@ const SelectedProfile = ({ match = {} }) => {
       .equalTo(profileId)
       .once('value', snapshot => {
         const selectedProfile = snapshot.val();
-        setSelectedProfile(Object.values(selectedProfile)[0] || {})
-      })
-  }
+        setSelectedProfile(Object.values(selectedProfile)[0] || {});
+      });
+  };
   const fetchAndSubscribeToContent = _ => {
     fetchSelectedProfile();
     subscribeToComments();
-  }
+  };
   const handleNewComment = comment => {
     const commentRef = database.ref(ref).push();
     const createdAt = new Date().toDateString();
