@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 export default ({
-  uid,
+  id,
   displayName,
   tagline,
   photoURL,
@@ -11,9 +11,9 @@ export default ({
   handleProfileClick,
   handleViewProfile
 }) => {
-  const isSelected = uid === selectedProfileId;
+  const isSelected = id === selectedProfileId;
   return (
-    <div className={classNames('profile', { 'selected-profile': isSelected })} onClick={handleProfileClick(uid)}>
+    <div className={classNames('profile', { 'selected-profile': isSelected })} onClick={handleProfileClick(id)}>
       <img className="profile-img" src={photoURL} alt="profile" />
       <h3>
         {displayName} - {occupation}

@@ -11,17 +11,13 @@ export const GlobalContextProvider = ({ children }) => {
   const [globalState, setGlobalState] = useReducer(globalContextReducer, INITIAL_STATE);
   const createSession = async _ => {
     const { currentUser = {}, token } = (await getCurrentUser()) || {};
-    if (!currentUser.uid) return;
+    const { uid } = currentUser;
+    if (!uid) return;
     sessionStorage.setItem('Auth', token);
-    database
-      .ref('/profiles')
-      .orderByChild('uid')
-      .equalTo(currentUser.uid)
-      .once('value', snapshot => {
-        const profile = snapshot.val() || {};
-        const currentUserProfile = Object.values(profile)[0] || {};
-        setGlobalState({ currentUser, currentUserProfile });
-      });
+    database.ref(`/profiles/${uid}`).once('value', snapshot => {
+      const currentUserProfile = snapshot.val() || {};
+      setGlobalState({ currentUser, currentUserProfile });
+    });
   };
   const clearSession = async _ => {
     await auth.signOut();

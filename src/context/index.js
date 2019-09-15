@@ -1,2 +1,2 @@
-export * from './Global.Context';
-export * from './Modal.Context';
+export * from './Global.context';
+export * from './Modal.context';

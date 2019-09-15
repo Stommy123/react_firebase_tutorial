@@ -1,12 +1,11 @@
 import React, { useContext } from 'react';
 import { GlobalContext } from '../../context';
-import { SectionWrapper, ProfileContent } from '../../components';
+import { SectionWrapper, ProfileContent, Loader } from '../../components';
 
 export default _ => {
   const { globalState = {} } = useContext(GlobalContext);
+  const { currentUserProfile } = globalState;
   return (
-    <SectionWrapper>
-      <ProfileContent {...globalState.currentUserProfile} />
-    </SectionWrapper>
+    <SectionWrapper>{currentUserProfile ? <ProfileContent {...currentUserProfile} /> : <Loader />}</SectionWrapper>
   );
 };
