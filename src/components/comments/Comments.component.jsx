@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 
 export default ({ comments = [], handleSubmit }) => {
-  const [comment, setComment] = useState(String());
+  const [comment, setComment] = useState('');
+
   const handleSubmitComment = e => {
     e.preventDefault();
     handleSubmit(comment);
-    setComment(String());
+    setComment('');
   };
+
   return (
     <div className="comments">
       <hr />

@@ -1,45 +1,43 @@
 import React, { useState, useEffect, useCallback, useContext } from 'react';
-import { withRouter } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { database } from '../../firebase';
 import { GlobalContext } from '../../context';
 import { SectionWrapper, ProfileContent, Comments } from '../../components';
 
-const SelectedProfile = ({ match = {} }) => {
+const SelectedProfile = _ => {
   const [selectedProfile, setSelectedProfile] = useState(null);
   const [comments, setComments] = useState([]);
   const { globalState } = useContext(GlobalContext);
+  const { profileId } = useParams()
+
   const { currentUserProfile = {} } = globalState;
-  const { profileId } = match.params || {};
   const ref = `/comments/${profileId}`;
-  const subscribeToComments = _ => {
-    database.ref(ref).on('value', snapshot => {
-      const comments = snapshot.val() || {};
-      setComments(Object.values(comments));
-    });
-  };
-  const fetchSelectedProfile = _ => {
-    database.ref(`/profiles/${profileId}`).once('value', snapshot => {
-      const selectedProfile = snapshot.val() || {};
-      setSelectedProfile(selectedProfile);
-    });
-  };
-  const fetchAndSubscribeToContent = _ => {
-    fetchSelectedProfile();
-    subscribeToComments();
-  };
+
+
   const handleNewComment = comment => {
     const commentRef = database.ref(ref).push();
     const createdAt = new Date().toDateString();
     const newComment = { comment, author: currentUserProfile.displayName, createdAt, id: commentRef.key };
     commentRef.set(newComment);
   };
-  const mountEffect = useCallback(fetchAndSubscribeToContent, []);
-  useEffect(
-    _ => {
-      mountEffect();
-    },
-    [mountEffect]
-  );
+
+  const fetchAndSubscribeToContent = useCallback(_ => {
+    // fetch profile
+    database.ref(`/profiles/${profileId}`).once("value", snapshot => {
+      const selectedProfile = snapshot.val() || {};
+      setSelectedProfile(selectedProfile);
+    });
+
+    // subscribe to comments for that profile
+    database.ref(ref).on("value", snapshot => {
+      const comments = snapshot.val() || {};
+      setComments(Object.values(comments));
+    });
+
+  }, [profileId, ref]);
+
+  useEffect(_ => void fetchAndSubscribeToContent(), [fetchAndSubscribeToContent])
+
   return (
     <SectionWrapper>
       {selectedProfile && <ProfileContent {...selectedProfile} />}
@@ -51,4 +49,4 @@ const SelectedProfile = ({ match = {} }) => {
   );
 };
 
-export default withRouter(SelectedProfile);
+export default SelectedProfile;

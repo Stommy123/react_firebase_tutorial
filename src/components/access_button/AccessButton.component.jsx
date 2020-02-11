@@ -5,6 +5,7 @@ import { isLoggedIn } from '../../helpers';
 
 const AccessButton = _ => {
   const { clearSession } = useContext(GlobalContext);
+  
   return isLoggedIn() ? (
     <Link to="/" onClick={clearSession}>
       Logout
