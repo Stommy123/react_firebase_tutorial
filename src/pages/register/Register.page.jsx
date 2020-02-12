@@ -7,9 +7,7 @@ import { getProfilePicture } from '../../helpers';
 
 export default ({ history }) => {
   const { setModal } = useContext(ModalContext);
-
   const [loading, setLoading] = useState(false);
-
   const handleRegister = async formData => {
     setLoading(true);
     const { email, password, tagline, displayName, occupation, passwordConfirmation } = formData;
@@ -29,7 +27,6 @@ export default ({ history }) => {
       setLoading(false);
     }
   };
-  
   return (
     <SectionWrapper columnDefs="col-md-6 col-md-offset-3">
       {loading ? <Loader loading={loading} /> : <Form schema={schema} handleSubmit={handleRegister} />}

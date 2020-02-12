@@ -12,7 +12,6 @@ export default ({
   handleViewProfile
 }) => {
   const isSelected = id === selectedProfileId;
-  
   return (
     <div className={classNames('profile', { 'selected-profile': isSelected })} onClick={handleProfileClick(id)}>
       <img className="profile-img" src={photoURL} alt="profile" />

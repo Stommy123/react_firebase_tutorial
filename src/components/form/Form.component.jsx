@@ -1,26 +1,20 @@
 import React, { useReducer, useMemo } from 'react';
 
 export default ({ schema: { id, fields = [], formHeading, submitText } = {}, handleSubmit }) => {
-
-  const initialState = useMemo(
-    _ =>
-      fields.reduce((acc, field) => {
-        acc[field.id] = field.default || '';
-        return acc;
-      }, {}),
-    [fields]
-  );
-
-  const [state, setState] = useReducer((state, payload) => ({ ...state, ...payload }), initialState);
-
+  const getInitialState = _ =>
+    fields.reduce((acc, field) => {
+      acc[field.id] = field.default || String();
+      return acc;
+    }, {});
+  const initialState = useMemo(getInitialState, []);
+  const formReducer = (state, payload) => ({ ...state, ...payload });
+  const [state, setState] = useReducer(formReducer, initialState);
   const handleInputChange = id => e => setState({ [id]: e.target.value });
-
   const onSubmit = e => {
     e.preventDefault();
     handleSubmit(state);
     setState(initialState);
   };
-
   return (
     <form onSubmit={onSubmit} id={id} className="form-wrapper">
       <h1 className="display-4 m-b-2">{formHeading}</h1>
@@ -31,7 +25,7 @@ export default ({ schema: { id, fields = [], formHeading, submitText } = {}, han
             type={type}
             placeholder={label}
             onChange={handleInputChange(id)}
-            value={state[id] || ''}
+            value={state[id] || String()}
           />
         </div>
       ))}

@@ -6,9 +6,8 @@ import { ModalContext, GlobalContext } from '../../context';
 
  export default ({ history }) => {	
   const { createSession } = useContext(GlobalContext);	
-  const { setModal } = useContext(ModalContext);	
   const [loading, setLoading] = useState(false);	
-
+  const { setModal } = useContext(ModalContext);	
   const handleLogin = async ({ email, password }) => {	
     setLoading(true);	
     try {	
@@ -23,7 +22,6 @@ import { ModalContext, GlobalContext } from '../../context';
       setLoading(false);	
     }	
   };	
-  
   return (	
     <SectionWrapper columnDefs="col-md-6 col-md-offset-3">	
       {loading ? <Loader loading={loading} /> : <Form schema={schema} handleSubmit={handleLogin} />}	
